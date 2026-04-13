@@ -1,2 +1,2 @@
-// Route group removed - Thread Meditation
+"use client"
 export default function Page() { return null }
