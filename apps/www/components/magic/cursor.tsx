@@ -17,13 +17,20 @@ export function MagicCursor() {
       cursorY.set(e.clientY)
       setIsVisible(true)
     }
+
     const handleOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement
-      if (target.closest("a") || target.closest("button") || target.closest("[data-magnetic]")) {
+      if (
+        target.closest("a") ||
+        target.closest("button") ||
+        target.closest("[data-magnetic]")
+      ) {
         setIsHovering(true)
       }
     }
+
     const handleOut = () => setIsHovering(false)
+
     window.addEventListener("mousemove", move)
     document.addEventListener("mouseover", handleOver)
     document.addEventListener("mouseout", handleOut)
@@ -34,15 +41,53 @@ export function MagicCursor() {
     }
   }, [cursorX, cursorY])
 
+  // Only show on desktop
   if (typeof window !== "undefined" && window.innerWidth < 768) return null
 
   return (
     <>
-      <motion.div className="pointer-events-none fixed top-0 left-0 z-[9999] hidden md:block" style={{ x: springX, y: springY, translateX: "-50%", translateY: "-50%" }}>
-        <motion.div className="rounded-full border border-pink-400/40" animate={{ width: isHovering ? 56 : 32, height: isHovering ? 56 : 32, opacity: isVisible ? 1 : 0, backgroundColor: isHovering ? "rgba(236, 72, 153, 0.08)" : "transparent" }} transition={{ type: "spring", damping: 20, stiffness: 300 }} />
+      {/* Glow ring */}
+      <motion.div
+        className="pointer-events-none fixed top-0 left-0 z-[9999] hidden md:block"
+        style={{
+          x: springX,
+          y: springY,
+          translateX: "-50%",
+          translateY: "-50%",
+        }}
+      >
+        <motion.div
+          className="rounded-full border border-pink-400/40"
+          animate={{
+            width: isHovering ? 56 : 32,
+            height: isHovering ? 56 : 32,
+            opacity: isVisible ? 1 : 0,
+            backgroundColor: isHovering
+              ? "rgba(236, 72, 153, 0.08)"
+              : "transparent",
+          }}
+          transition={{ type: "spring", damping: 20, stiffness: 300 }}
+        />
       </motion.div>
-      <motion.div className="pointer-events-none fixed top-0 left-0 z-[9999] hidden md:block" style={{ x: cursorX, y: cursorY, translateX: "-50%", translateY: "-50%" }}>
-        <motion.div className="rounded-full bg-pink-500" animate={{ width: isHovering ? 8 : 5, height: isHovering ? 8 : 5, opacity: isVisible ? 1 : 0 }} transition={{ type: "spring", damping: 20, stiffness: 300 }} />
+      {/* Dot core */}
+      <motion.div
+        className="pointer-events-none fixed top-0 left-0 z-[9999] hidden md:block"
+        style={{
+          x: cursorX,
+          y: cursorY,
+          translateX: "-50%",
+          translateY: "-50%",
+        }}
+      >
+        <motion.div
+          className="rounded-full bg-pink-500"
+          animate={{
+            width: isHovering ? 8 : 5,
+            height: isHovering ? 8 : 5,
+            opacity: isVisible ? 1 : 0,
+          }}
+          transition={{ type: "spring", damping: 20, stiffness: 300 }}
+        />
       </motion.div>
     </>
   )
