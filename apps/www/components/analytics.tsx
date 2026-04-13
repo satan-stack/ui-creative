@@ -1,2 +1,5 @@
-"use client"
-export function Analytics() { return null }
+import { Analytics as VercelAnalytics } from '@vercel/analytics/next';
+
+export function Analytics() {
+  return <VercelAnalytics />;
+}

@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/sonner"
 import { JsonLd } from "@/components/seo/json-ld"
+import { Analytics } from "@/components/analytics"
 import "@/styles/globals.css"
 
 export const metadata: Metadata = {
@@ -26,7 +27,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <head><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet" /></head>
       <body className={cn("min-h-svh font-sans antialiased", fontVariables)}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
-          <JsonLd />{children}<Toaster />
+          <JsonLd />{children}<Toaster /><Analytics />
         </ThemeProvider>
       </body>
     </html>
